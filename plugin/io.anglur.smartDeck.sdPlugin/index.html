@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>io.anglur.smartDeck</title>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+	<script>
+		var websocket = null;
+		var pluginUUID = null;
+		var golangSocket = null;
+
+		var numberdisplayAction = {
+			type: "io.anglur.smartDeck.action",
+
+			onKeyUp: function (context, settings, coordinates, userDesiredState) {
+				if (golangSocket.readyState === golangSocket.CLOSED) {
+					golangSocket = new WebSocket("ws://localhost:1337");
+					golangSocket.onopen = function () {
+						golangSocket.send(JSON.stringify(coordinates));
+					}
+				} else {
+					golangSocket.send(JSON.stringify(coordinates));
+				}
+			}
+		};
+
+		function connectSocket(inPort, inPluginUUID, inRegisterEvent, inInfo) {
+			pluginUUID = inPluginUUID
+
+			websocket = new WebSocket("ws://localhost:" + inPort);
+			golangSocket = new WebSocket("ws://localhost:1337");
+
+			function registerPlugin(inPluginUUID) {
+				var json = {
+					"event": inRegisterEvent,
+					"uuid": inPluginUUID
+				};
+
+				websocket.send(JSON.stringify(json));
+			};
+
+			websocket.onopen = function () {
+				registerPlugin(pluginUUID);
+			};
+
+			websocket.onmessage = function (evt) {
+				var jsonObj = JSON.parse(evt.data);
+				var event = jsonObj['event'];
+				var context = jsonObj['context'];
+				var jsonPayload = jsonObj['payload'] || {};
+
+				if (event == "keyUp") {
+					var settings = jsonPayload['settings'];
+					var coordinates = jsonPayload['coordinates'];
+					var userDesiredState = jsonPayload['userDesiredState'];
+					numberdisplayAction.onKeyUp(context, settings, coordinates, userDesiredState);
+				}
+			};
+
+			websocket.onclose = function () {};
+		};
+	</script>
+</body>
+
+</html>

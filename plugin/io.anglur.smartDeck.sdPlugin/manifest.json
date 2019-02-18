@@ -1,0 +1,36 @@
+{
+  "Actions": [
+    {
+	  "Icon": "icon", 
+      "Name": "Smart Deck",
+      "States": [
+        {
+          "Image": "icon",
+          "TitleAlignment": "middle", 
+          "FontSize": "11"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "This action displays a value set by the user",
+      "UUID": "io.anglur.smartDeck.action"
+    }
+  ],
+  "Author": "Jonathan Beaudoin",
+  "CodePath": "index.html",
+  "Description": "Integrates stream deck with various smart home utilities",
+  "Name": "Smart Deck",
+  "URL": "https://www.elgato.com/gaming/stream-deck",
+  "Icon": "icon",
+  "PropertyInspectorPath": "",
+  "Version": "1.4",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.11"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ]
+}
