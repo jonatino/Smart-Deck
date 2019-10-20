@@ -7,31 +7,31 @@ import (
 )
 
 var actions = map[Coordinate]func(){
-	Coordinate{0, 1}: lightsOn,
-	Coordinate{0, 2}: lightsOff,
-	Coordinate{0, 3}: fanOn,
-	Coordinate{0, 4}: fanOff,
-	Coordinate{1, 0}: watchTv,
-	Coordinate{1, 1}: netflix,
-	Coordinate{1, 2}: amazon,
-	Coordinate{1, 3}: viewPc,
-	Coordinate{1, 4}: tvOff,
+	Coordinate{0, 1}: lightsToggle,
+	Coordinate{0, 2}: speakersToggle,
+	Coordinate{0, 3}: fanToggle,
+	Coordinate{0, 4}: nil,
+	Coordinate{1, 0}: nil,
+	Coordinate{1, 1}: nil,
+	Coordinate{1, 2}: nil,
+	Coordinate{1, 3}: nil,
+	Coordinate{1, 4}: nil,
+	Coordinate{2, 0}: inputSwitch,
+	Coordinate{2, 1}: nil,
+	Coordinate{2, 2}: nil,
+	Coordinate{2, 3}: nil,
+	Coordinate{2, 4}: nil,
 }
 
-func lightsOn()  { webhookRequest("lights_on") }
-func lightsOff() { webhookRequest("lights_off") }
+func lightsToggle()   { webhookRequest("lights_toggle") }
+func speakersToggle() { webhookRequest("speakers_toggle") }
+func fanToggle()      { webhookRequest("fan_toggle") }
 
-func fanOn()  { webhookRequest("fan_on") }
-func fanOff() { webhookRequest("fan_off") }
-
-func watchTv() { webhookRequest("tv_on") }
-func netflix() { webhookRequest("tv_netflix") }
-func amazon()  { webhookRequest("tv_amazon") }
-func viewPc()  { webhookRequest("tv_pc") }
-func tvOff()   { webhookRequest("tv_off") }
+func inputSwitch() { webhookRequest("input_switch") }
 
 func webhookRequest(key string) {
-	response, err := http.Get(fmt.Sprintf(webhookUrl, key))
+	fmt.Println(fmt.Sprintf(webhookUrl, key))
+	response, err := http.Post(fmt.Sprintf(webhookUrl, key), "", nil)
 	if err != nil {
 		fmt.Printf("%s", err)
 	} else {

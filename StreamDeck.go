@@ -40,18 +40,23 @@ func handleMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	args := os.Args[1:]
-	if len(args) == 0 {
-		fmt.Println("Please pass your IFTT maker webhook key as the first argument")
-		os.Exit(1)
-	}
-	webhookKey := os.Args[1:][0]
-	if webhookKey == "" {
-		fmt.Println("Please pass your IFTT maker webhook key as the first argument")
+	fail := func() {
+		fmt.Println("Please pass your Home Assistant base url (e.x http://192.168.0.100:8123 or http://homeassist.example.com) as the first argument")
 		os.Exit(1)
 	}
 
-	webhookUrl = "https://maker.ifttt.com/trigger/%s/with/key/" + webhookKey
+	args := os.Args[1:]
+	if len(args) == 0 {
+		fail()
+	}
+
+	baseurl := os.Args[1:][0]
+	if baseurl == "" {
+		fail()
+	}
+
+	webhookUrl = baseurl + "/api/webhook/%s"
+
 	fmt.Println(webhookUrl)
 
 	http.HandleFunc("/", handleMessage)
