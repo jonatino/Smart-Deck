@@ -29,6 +29,9 @@ func fanToggle()      { webhookRequest("fan_toggle") }
 
 func inputSwitch() { webhookRequest("input_switch") }
 
+func deviceSleeping() { webhookRequest("speaker_outlet_off") }
+func deviceWake()     { webhookRequest("speaker_outlet_on") }
+
 func webhookRequest(key string) {
 	fmt.Println(fmt.Sprintf(webhookUrl, key))
 	response, err := http.Post(fmt.Sprintf(webhookUrl, key), "", nil)

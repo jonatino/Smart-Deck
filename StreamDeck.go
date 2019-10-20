@@ -33,9 +33,15 @@ func handleMessage(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Printf("Recieved message: %s \n", message)
 
-		data := Coordinate{}
-		json.Unmarshal([]byte(message), &data)
-		actions[data]()
+		if string(message) == "DEVICE-SLEEPING" {
+			deviceSleeping()
+		} else if string(message) == "DEVICE-WAKE" {
+			deviceWake()
+		} else {
+			data := Coordinate{}
+			json.Unmarshal([]byte(message), &data)
+			actions[data]()
+		}
 	}
 }
 
