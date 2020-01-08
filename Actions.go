@@ -12,7 +12,7 @@ var actions = map[Coordinate]func(){
 	Coordinate{0, 3}: fanToggle,
 	Coordinate{0, 4}: nil,
 	Coordinate{1, 0}: nil,
-	Coordinate{1, 1}: nil,
+	Coordinate{1, 1}: deskLampToggle,
 	Coordinate{1, 2}: nil,
 	Coordinate{1, 3}: nil,
 	Coordinate{1, 4}: nil,
@@ -26,6 +26,7 @@ var actions = map[Coordinate]func(){
 func lightsToggle()   { webhookRequest("lights_toggle") }
 func speakersToggle() { webhookRequest("speakers_toggle") }
 func fanToggle()      { webhookRequest("fan_toggle") }
+func deskLampToggle() { webhookRequest("desk_lamp_toggle") }
 
 func inputSwitch() { webhookRequest("input_switch") }
 
@@ -39,9 +40,11 @@ func webhookRequest(key string) {
 		fmt.Printf("%s", err)
 	} else {
 		defer response.Body.Close()
-		_, err := ioutil.ReadAll(response.Body)
+		body, err := ioutil.ReadAll(response.Body)
 		if err != nil {
 			fmt.Printf("%s", err)
 		}
+		fmt.Println(body)
+		fmt.Println(response)
 	}
 }
