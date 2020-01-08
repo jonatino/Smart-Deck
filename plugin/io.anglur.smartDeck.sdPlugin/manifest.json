@@ -1,15 +1,15 @@
 {
   "Actions": [
     {
-	  "Icon": "icon", 
+      "Icon": "icon",
       "Name": "Smart Deck",
       "States": [
         {
           "Image": "icon",
-          "TitleAlignment": "middle", 
+          "TitleAlignment": "middle",
           "FontSize": "11"
         }
-      ], 
+      ],
       "SupportedInMultiActions": false,
       "Tooltip": "This action displays a value set by the user",
       "UUID": "io.anglur.smartDeck.action"
@@ -19,10 +19,10 @@
   "CodePath": "index.html",
   "Description": "Integrates stream deck with various smart home utilities",
   "Name": "Smart Deck",
-  "URL": "https://www.elgato.com/gaming/stream-deck",
-  "Icon": "icon",
+  "URL": "https://github.com/Jonatino/Smart-Deck",
+  "Icon": "img/icon",
   "PropertyInspectorPath": "",
-  "Version": "1.4",
+  "Version": "1.5",
   "OS": [
     {
       "Platform": "mac",
